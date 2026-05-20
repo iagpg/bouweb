@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import TopNavBar from "./components/navigation/TopNavBar";
 import Footer from "./components/layout/Footer";
+import WhatsAppButton from "./components/ui/WhatsAppButton";
 
 export const metadata: Metadata = {
   title: "Bouwobra | Proteção que Constrói Confiança",
@@ -35,6 +36,7 @@ export default function RootLayout({
         <TopNavBar />
         <main className="flex-1 pt-20">{children}</main>
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );

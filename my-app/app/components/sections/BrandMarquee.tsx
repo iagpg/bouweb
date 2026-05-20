@@ -6,6 +6,9 @@ export default function BrandMarquee() {
   return (
     <section className="py-12 px-8 bg-surface-container-low">
       <div className="container mx-auto overflow-hidden">
+          <h2 className="text-4xl font-headline text-center font-bold text-on-primary-container tracking-tighter mb-15 relative z-10">
+         Parcerias sólidas com marcas rigorosamente certificadas <br />
+        </h2>
         <div className="select-none flex gap-16 items-center w-max animate-scroll hover:[animation-play-state:paused]">
           {brandNames.map((name, index) => (
             <div

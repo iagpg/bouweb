@@ -40,6 +40,8 @@
     --color-outline: #767575;
     --color-outline-variant: #484847;
     --color-inverse-surface: #fcf9f8;
+
+
   }
 
   * {
@@ -71,6 +73,17 @@
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
 
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   @keyframes scroll {
     0% {
       transform: translateX(0);
@@ -83,6 +96,14 @@
   .animate-scroll {
     animation: scroll 28s linear infinite;
   }
+
+  .animate-fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    will-change: transform, opacity;
+    animation: fade-up 0.9s ease-out both;
+    animation-delay: var(--delay, 0s);
+  }
 }
 
 @theme inline {
@@ -91,8 +112,18 @@
   --color-tertiary: var(--color-tertiary);
   --color-error: var(--color-error);
   --color-surface: var(--color-surface);
+  --color-surface-container-low: var(--color-surface-container-low);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-surface-container-highest: var(--color-surface-container-highest);
   --color-on-surface: var(--color-on-surface);
+  --color-on-surface-variant: var(--color-on-surface-variant);
   --color-on-primary: var(--color-on-primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-secondary-container: var(--color-secondary-container);
+  --color-on-secondary-container: var(--color-on-secondary-container);
+  --color-outline: var(--color-outline);
+  --color-outline-variant: var(--color-outline-variant);
   --font-headline: 'Space Grotesk';
   --font-body: 'Inter';
   --font-sans: 'Inter', sans-serif;

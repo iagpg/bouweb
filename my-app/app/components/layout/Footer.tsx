@@ -54,7 +54,7 @@ export default function Footer() {
             Suporte
           </h5>
           <Link
-            href="#"
+            href="/contact"
             className="text-neutral-600 hover:text-orange-400 transition-colors font-body text-xs"
           >
             Fale Conosco
