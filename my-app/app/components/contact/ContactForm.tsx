@@ -88,6 +88,7 @@ export default function ContactForm() {
             <input
               className="w-full rounded-md border-none bg-zinc-950 p-4 text-on-surface placeholder:text-neutral-700 focus:ring-1 focus:ring-primary"
               placeholder="Digite seu nome completo"
+              maxLength={40}
               type="text"
               value={formValues.name}
               onChange={(event) =>
@@ -106,6 +107,7 @@ export default function ContactForm() {
             <input
               className="w-full rounded-md border-none bg-zinc-950 p-4 text-on-surface placeholder:text-neutral-700 focus:ring-1 focus:ring-primary"
               placeholder="seu.email@gmail.com"
+              maxLength={40}
               type="email"
               value={formValues.email}
               onChange={(event) =>

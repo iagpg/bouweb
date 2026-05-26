@@ -1,71 +1,89 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { CATALOG_HREF } from '@/app/lib/whatsapp';
+import ShimmerButton from '../ui/ShimmerButton';
 
 export default function TopNavBar() {
   const pathname = usePathname();
   const isHome = pathname === '/';
   const isContact = pathname === '/contact';
+  const isAboutUs = pathname === '/about-us';
+
+  const navLinkClass = (isActive = false) =>
+    [
+      'relative pb-1 transition-colors',
+      isActive
+        ? 'text-orange-400 hover:text-orange-300'
+        : 'text-neutral-400 hover:text-white',
+    ].join(' ');
+
+  const activeLine = (
+    <span className="absolute bottom-0 left-0 h-0.5 w-full origin-left animate-[nav-active-line_500ms_ease-out_both] bg-orange-500" />
+  );
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-neutral-900/80 backdrop-blur-md shadow-[0px_40px_40px_-15px_rgba(254,174,43,0.04)]">
-      <div className="container mx-auto relative flex items-center h-20 px-8">
-        {/* Logo */}
-        <Link href="/" className="relative block h-35 w-[130px]">
+    <nav className="fixed top-0 z-50 w-full bg-neutral-900/80 shadow-[0px_40px_40px_-15px_rgba(254,174,43,0.04)] backdrop-blur-md">
+      <style>
+        {`
+          @keyframes nav-active-line {
+            from { transform: scaleX(0); opacity: 0; }
+            to { transform: scaleX(1); opacity: 1; }
+          }
+        `}
+      </style>
+
+      <div className="container mx-auto grid h-20 grid-cols-[140px_1fr_140px] items-center px-8 md:grid-cols-[160px_1fr_160px]">
+        <Link href="/" className="relative mt-3 block h-15 w-25object-top">
           <Image
             src="/bouw_logo.svg"
             alt="Bouwobra"
             fill
-            className="object-contain object-left"
+            className="scale-200 object-contain object-left"
             priority
           />
         </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-8 font-['Space_Grotesk'] uppercase tracking-tight text-sm">
-          <Link
-            href="/"
-            className={`pb-1 transition-colors ${
-              isHome
-                ? 'border-b-2 border-orange-500 text-orange-400 hover:text-orange-300'
-                : 'text-neutral-400 hover:text-white'
-            }`}
-          >
+        <div className="hidden items-center justify-center gap-8 font-['Space_Grotesk'] text-sm uppercase tracking-tight md:flex">
+          <Link href="/" className={navLinkClass(isHome)}>
             Home
+            {isHome && activeLine}
           </Link>
+
+          <Link href="/about-us" className={navLinkClass(isAboutUs)}>
+            Sobre Nos
+            {isAboutUs && activeLine}
+          </Link>
+
           <Link
             href="#"
-            className="text-neutral-400 hover:text-white transition-colors"
-          >
-            Sobre
-          </Link>
-          <Link
-            href="#"
-            className="text-neutral-400 hover:text-white transition-colors"
+            className="text-neutral-400 transition-colors hover:text-white"
           >
             Produtos
           </Link>
+
           <Link
-            href="#"
-            className="text-neutral-400 hover:text-white transition-colors"
+            href="/#brands"
+            className="text-neutral-400 transition-colors hover:text-white"
           >
             Brands
           </Link>
-          <Link
-            href="/contact"
-            className={`pb-1 transition-colors ${
-              isContact
-                ? 'border-b-2 border-orange-500 text-orange-400 hover:text-orange-300'
-                : 'text-neutral-400 hover:text-white'
-            }`}
-          >
+
+          <Link href="/contact" className={navLinkClass(isContact)}>
             Contato
+            {isContact && activeLine}
           </Link>
         </div>
 
-       
+        <div className="hidden justify-end md:flex">
+          <a href={CATALOG_HREF} target="_blank" rel="noopener noreferrer">
+            <ShimmerButton className="h-10 px-7 py-3 text-sm">
+              Catalogo
+            </ShimmerButton>
+          </a>
+        </div>
       </div>
     </nav>
   );

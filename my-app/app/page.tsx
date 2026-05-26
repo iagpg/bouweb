@@ -1,9 +1,9 @@
-import HeroSection from './components/sections/HeroSection';
-import ProductCategories from './components/sections/ProductCategories';
-import TopBrandPartners from './components/sections/TopBrandPartners';
-import BrandMarquee from './components/sections/BrandMarquee';
-import ValuesSection from './components/sections/ValuesSection';
-import QuoteCtaSection from './components/sections/QuoteCtaSection';
+import HeroSection from './components/home/HeroSection';
+import ProductCategories from './components/home/ProductCategories';
+import TopBrandPartners from './components/home/TopBrandPartners';
+import BrandMarquee from './components/home/BrandMarquee';
+import ValuesSection from './components/home/ValuesSection';
+import QuoteCtaSection from './components/home/QuoteCtaSection';
 
 export default function Home() {
   return (
