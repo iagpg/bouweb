@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { FaWhatsapp } from 'react-icons/fa';
-import { WHATSAPP_HREF } from '../../lib/whatsapp';
+import ContactModalTrigger from '../ui/ContactModalTrigger';
 
 export default function QuoteCtaSection() {
   return (
@@ -19,15 +18,12 @@ export default function QuoteCtaSection() {
           Fale agora com nosso time comercial e receba um orcamento personalizado em minutos.
         </p>
 
-        <Link
-          href={WHATSAPP_HREF}
-          target="_blank"
-          rel="noreferrer"
+        <ContactModalTrigger
           className="relative z-10 flex items-center gap-4 rounded-md bg-surface px-12 py-5 text-lg font-headline font-bold uppercase tracking-widest text-white shadow-2xl transition-all hover:bg-surface-bright"
         >
           <FaWhatsapp className="text-4xl text-green-500" />
           Solicitar via WhatsApp
-        </Link>
+        </ContactModalTrigger>
 
         <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-primary/10 blur-[150px]"></div>
       </div>

@@ -1,4 +1,4 @@
-import { WHATSAPP_HREF } from '../../lib/whatsapp';
+import ContactModalTrigger from '../ui/ContactModalTrigger';
 
 export default function ContactWhatsAppCta() {
   return (
@@ -12,11 +12,8 @@ export default function ContactWhatsAppCta() {
             Entre em contato diretamente com nosso departamento de engenharia para obter especificacoes tecnicas e precos rapidamente.
           </p>
         </div>
-        <a
+        <ContactModalTrigger
           className="flex items-center gap-3 rounded-full bg-white px-8 py-4 font-headline font-bold uppercase tracking-tight text-black shadow-xl transition-transform group-hover:scale-105"
-          href={WHATSAPP_HREF}
-          target="_blank"
-          rel="noreferrer"
         >
           <span
             className="material-symbols-outlined"
@@ -25,7 +22,7 @@ export default function ContactWhatsAppCta() {
             chat
           </span>
           Solicitar Orcamento via WhatsApp
-        </a>
+        </ContactModalTrigger>
       </div>
       <div className="absolute -right-12 -bottom-12 opacity-10 transition-transform duration-700 group-hover:scale-110">
         <span className="material-symbols-outlined text-[12rem]">construction</span>

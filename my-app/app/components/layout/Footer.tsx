@@ -70,17 +70,16 @@ export default function Footer() {
         </p>
         <div className="flex gap-6">
          
-          <span className="text-[10px] text-neutral-700 font-bold tracking-[0.3em] uppercase">
-            Desenvolvido por{' '}
             <Link 
               href="https://www.linkedin.com/in/iago-gama-7137201b6" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover:text-orange-400 transition-colors"
             >
+          <span className="hover:text-orange-400 transition-colors text-[10px] text-orange-500 font-bold tracking-[0.3em] uppercase">
+            Desenvolvido por{' '}
               @iagpg
-            </Link>
           </span>
+            </Link>
         </div>
       </div>
     </footer>

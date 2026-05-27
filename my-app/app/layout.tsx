@@ -3,6 +3,7 @@ import "./globals.css";
 import TopNavBar from "./components/navigation/TopNavBar";
 import Footer from "./components/layout/Footer";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
+import ContactModalProvider from "./components/ui/ContactModalProvider";
 
 export const metadata: Metadata = {
   title: "Bouwobra | Proteção que Constrói Confiança",
@@ -33,10 +34,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-surface text-on-surface">
-        <TopNavBar />
-        <main className="flex-1 pt-20">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <ContactModalProvider>
+          <TopNavBar />
+          <main className="flex-1 pt-20">{children}</main>
+          <Footer />
+          <WhatsAppButton />
+        </ContactModalProvider>
       </body>
     </html>
   );

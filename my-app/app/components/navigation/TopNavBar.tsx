@@ -3,14 +3,32 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { CATALOG_HREF } from '@/app/lib/whatsapp';
 import ShimmerButton from '../ui/ShimmerButton';
 
 export default function TopNavBar() {
   const pathname = usePathname();
-  const isHome = pathname === '/';
   const isContact = pathname === '/contact';
   const isAboutUs = pathname === '/about-us';
+
+  const [hash, setHash] = useState('');
+  
+  const isBrands = pathname === '/' && hash === '#brands';
+  const isHome = pathname === '/' && !isBrands;
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleHashChange = () => {
+      setHash(window.location.hash);
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [pathname]);
+
 
   const navLinkClass = (isActive = false) =>
     [
@@ -47,28 +65,27 @@ export default function TopNavBar() {
         </Link>
 
         <div className="hidden items-center justify-center gap-8 font-['Space_Grotesk'] text-sm uppercase tracking-tight md:flex">
-          <Link href="/" className={navLinkClass(isHome)}>
+          <Link href="/" className={navLinkClass(isHome)} onClick={() => setHash('/') }>
             Home
             {isHome && activeLine}
           </Link>
 
           <Link href="/about-us" className={navLinkClass(isAboutUs)}>
-            Sobre Nos
+            Sobre Nós
             {isAboutUs && activeLine}
           </Link>
 
-          <Link
+          {/* <Link
             href="#"
             className="text-neutral-400 transition-colors hover:text-white"
           >
-            Produtos
-          </Link>
+            Visita técnica
+          </Link> */}
 
           <Link
-            href="/#brands"
-            className="text-neutral-400 transition-colors hover:text-white"
-          >
+            href="/#brands" className={navLinkClass(isBrands)} >
             Brands
+             {isBrands && activeLine}
           </Link>
 
           <Link href="/contact" className={navLinkClass(isContact)}>

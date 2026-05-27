@@ -12,8 +12,9 @@ export default function ContactInfoCards() {
             Vendedores
           </p>
           <p className="text-xl font-headline font-medium text-on-surface">
+            vendas1@bouwobra.com
             vendas2@bouwobra.com
-            vendas3@bouwobra.com
+            vendas4@bouwobra.com
           </p>
         </div>
       </div>

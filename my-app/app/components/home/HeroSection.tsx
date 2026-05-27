@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import Image from 'next/image';
-import { CATALOG_HREF, WHATSAPP_HREF } from '../../lib/whatsapp';
+import { CATALOG_HREF } from '../../lib/whatsapp';
+import ContactModalTrigger from '../ui/ContactModalTrigger';
 
 export default function HeroSection() {
   return (
@@ -40,10 +40,7 @@ export default function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4">
-            <Link
-              href={WHATSAPP_HREF}
-              target="_blank"
-              rel="noreferrer"
+            <ContactModalTrigger
               className="group relative isolate overflow-hidden rounded-md bg-primary px-10 py-4 font-headline font-bold uppercase tracking-wider text-on-primary shadow-[0_10px_30px_-10px_rgba(254,174,43,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dim hover:shadow-[0_18px_45px_-18px_rgba(254,174,43,0.55)]"
             >
               <span className="relative z-10 flex items-center gap-3">
@@ -52,7 +49,7 @@ export default function HeroSection() {
                 </span>
                 Solicitar Orcamento
               </span>
-            </Link>
+            </ContactModalTrigger>
 
             <a
               href={CATALOG_HREF}

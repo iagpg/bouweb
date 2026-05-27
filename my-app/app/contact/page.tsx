@@ -11,7 +11,7 @@ export default function ContactPage() {
         <div className="absolute inset-0 z-0">
           <Image
             alt="Industrial precision"
-            className="object-cover opacity-40"
+            className="object-cover opacity-90"
             data-alt="close-up of industrial machinery components with warm amber lighting and sharp metallic textures in a dark workshop setting"
             fill
             src="/contact-us.png"

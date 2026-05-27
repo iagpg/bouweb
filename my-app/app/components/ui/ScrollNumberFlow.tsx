@@ -39,7 +39,7 @@ export default function ScrollNumberFlow({ value }: ScrollNumberFlowProps) {
 
   return (
     <span ref={numberRef}>
-      <NumberFlow format={{ notation: 'compact' }}  value={currentValue} />
+      <NumberFlow 	spinTiming={{ direction:"alternate", duration: 1750, easing:"ease-in-out"  }} format={{ notation: 'compact' }}  value={currentValue} />
     </span>
   );
 }

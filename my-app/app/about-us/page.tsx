@@ -92,7 +92,7 @@ export default function AboutUsPage() {
 
           <div className="flex min-h-[220px] w-full flex-col items-center justify-center border border-outline-variant/10 bg-surface-container-high p-8 text-center">
             <span className="mb-2 font-headline text-5xl font-bold text-primary">
-                 <ScrollNumberFlow value={43854} />
+                 <ScrollNumberFlow  value={102854} />
             </span>
             <span className="font-label text-xs uppercase tracking-widest text-on-surface-variant">
              Vendas Concluídas
