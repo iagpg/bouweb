@@ -7,7 +7,7 @@ export default function QuoteCtaSection() {
   return (
     <section className="relative overflow-hidden px-8 py-24">
       <div className="container relative z-10 mx-auto flex flex-col items-center rounded-2xl bg-primary p-12 text-center md:p-20">
-        <div className="absolute top-0 left-0 h-full w-full rounded-2xl bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+        <div className="animate-diagonal-parallax absolute left-0 top-0 h-full w-full rounded-2xl bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] scale-150 opacity-10"></div>
 
         <h2 className="relative z-10 mb-6 font-headline text-4xl font-bold tracking-tighter text-on-primary-container md:text-6xl">
           Pronto para elevar o nível <br />
@@ -15,7 +15,7 @@ export default function QuoteCtaSection() {
         </h2>
 
         <p className="relative z-10 mb-10 max-w-2xl text-xl font-medium text-on-primary-container/80">
-          Fale agora com nosso time comercial e receba um orcamento personalizado em minutos.
+          Fale agora com nosso time comercial e receba um orçamento personalizado em minutos.
         </p>
 
         <ContactModalTrigger

@@ -1,21 +1,27 @@
-import Image from 'next/image';
 import { CATALOG_HREF } from '../../lib/whatsapp';
+import AnimatedHighlight from '../ui/AnimatedHighlight';
 import ContactModalTrigger from '../ui/ContactModalTrigger';
 
 export default function HeroSection() {
   return (
     <section className="relative flex h-[870px] items-center overflow-hidden">
       {/* Background Image with Gradient */}
+       {/* Background Video with Gradient */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/banner_home.png"
-          alt="Construction site at dusk"
-          fill
-          className="object-cover opacity-40 grayscale"
-          priority
-        />
+        <video
+          className="h-full w-full object-cover opacity-40 grayscale"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        >
+          <source src="/new.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
       </div>
+
 
       {/* Content */}
       <div className="container relative z-10 mx-auto px-8">
@@ -31,7 +37,9 @@ export default function HeroSection() {
             style={{ ['--delay' as string]: '2s' }}
           >
             Proteção que <br />
-            <span className="text-primary">Constroi Confiança</span>
+            <AnimatedHighlight className="text-primary" delay="2.7s">
+              Constroi Confiança
+            </AnimatedHighlight>
           </h1>
 
           <p className="mb-10 max-w-xl font-body text-xl leading-relaxed text-on-surface-variant">

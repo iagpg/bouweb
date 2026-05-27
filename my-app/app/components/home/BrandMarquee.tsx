@@ -5,27 +5,35 @@ const brandNames = ["Marluvas","Bracol","Delta Plus","Âncora","Calfor","Camper"
 export default function BrandMarquee() {
   return (
     <section className="py-12 px-8 bg-surface-container-low">
-      <div className="container mx-auto overflow-hidden">
+      <div className="container mx-auto">
           <h2 className="text-4xl font-headline text-center font-bold text-on-primary-container tracking-tighter mb-15 relative z-10">
-         Parcerias sólidas com marcas rigorosamente certificadas <br />
+        <span className="text-primary">Parcerias </span> sólidas com marcas rigorosamente certificadas <br />
         </h2>
-        <div className="select-none flex gap-16 items-center w-max animate-scroll hover:[animation-play-state:paused]">
-          {brandNames.map((name, index) => (
-            <div
-              key={`${name}-${index}`}
-              className="h-8 md:h-10 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity duration-300"
-            >
-              <span className="text-2xl font-bold text-white tracking-tighter opacity-50">{name}</span>
-            </div>
-          ))}
-          {brandNames.map((name, index) => (
-            <div
-              key={`dup-${name}-${index}`}
-              className="h-8 md:h-10 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity duration-300"
-            >
-              <span className=" text-2xl font-bold text-white tracking-tighter opacity-50">{name}</span>
-            </div>
-          ))}
+        <div
+          className="overflow-hidden"
+          style={{
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+          }}
+        >
+          <div className="select-none flex gap-16 items-center w-max animate-scroll hover:[animation-play-state:paused]">
+            {brandNames.map((name, index) => (
+              <div
+                key={`${name}-${index}`}
+                className="h-8 md:h-10 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity duration-300"
+              >
+                <span className="text-2xl font-bold text-white tracking-tighter opacity-50">{name}</span>
+              </div>
+            ))}
+            {brandNames.map((name, index) => (
+              <div
+                key={`dup-${name}-${index}`}
+                className="h-8 md:h-10 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity duration-300"
+              >
+                <span className=" text-2xl font-bold text-white tracking-tighter opacity-50">{name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

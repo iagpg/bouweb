@@ -4,6 +4,7 @@ import TopNavBar from "./components/navigation/TopNavBar";
 import Footer from "./components/layout/Footer";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
 import ContactModalProvider from "./components/ui/ContactModalProvider";
+import AssetPreloader from "./components/ui/AssetPreloader";
 
 export const metadata: Metadata = {
   title: "Bouwobra | Proteção que Constrói Confiança",
@@ -32,8 +33,10 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
+        <link rel="preload" href="/new.mp4" as="video" type="video/mp4" />
       </head>
       <body className="min-h-full flex flex-col bg-surface text-on-surface">
+        <AssetPreloader />
         <ContactModalProvider>
           <TopNavBar />
           <main className="flex-1 pt-20">{children}</main>

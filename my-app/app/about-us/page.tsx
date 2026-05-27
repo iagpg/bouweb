@@ -2,7 +2,7 @@ import Image from 'next/image';
 import ScrollNumberFlow from '../components/ui/ScrollNumberFlow';
 
 const heroImage =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuBQdEV-aYwMkGa3wfdaT_45PolT1PSHMwTFd-tgI2BFuFx7ugqsUayvhDPJeKUVtIh8O497f5TJlGGokFmMnWN85qmK5lIJ6g_yH59xJQAlWPV5pqozeHTwmTuoNV355ucU59Mx1c3B5N5QBIaByJIIZ320PrcLPRShkBHppm4SwsU7PPA0DVbNRobg5aRKNh23cA6b6DEzyoalLCrDnXaAc4gvsWiJI0uINYkAbZI2obNo9vZelVrPWmoP5lytOzg-EQbSUneeK_0';
+  '/banner_home.png';
 
 export default function AboutUsPage() {
   return (

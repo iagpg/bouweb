@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { FaInstagram } from 'react-icons/fa';
+import { FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -23,6 +23,7 @@ export default function Footer() {
               className="flex items-center gap-2 text-neutral-500 hover:text-orange-500 transition-colors"
             >
               <FaInstagram className="text-2xl" />
+              <FaLinkedin className="text-2xl" />
               <span>@bouwobra</span>
             </Link>
           </div>
