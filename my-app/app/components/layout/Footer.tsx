@@ -50,12 +50,7 @@ export default function Footer() {
           >
             Sobre Nós
           </Link>
-          <Link
-            href="#"
-            className="text-neutral-600 hover:text-orange-400 transition-colors font-body text-xs"
-          >
-            Equipe Bouw Obra
-          </Link>
+    
          
         </div>
 
