@@ -23,8 +23,18 @@ export default function Footer() {
               className="flex items-center gap-2 text-neutral-500 hover:text-orange-500 transition-colors"
             >
               <FaInstagram className="text-2xl" />
+            
+              <span>@Bouwobra</span>
+            </Link>
+             <Link 
+              href="https://www.linkedin.com/company/bouwobra/posts/?feedView=all" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-neutral-500 hover:text-orange-500 transition-colors"
+            >
               <FaLinkedin className="text-2xl" />
-              <span>@bouwobra</span>
+               <span>Bouw.Obra</span>
+
             </Link>
           </div>
         </div>

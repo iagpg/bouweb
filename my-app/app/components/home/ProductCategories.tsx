@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 import { CATALOG_HREF } from '@/app/lib/whatsapp';
 
 const categories = [
@@ -17,7 +18,7 @@ const categories = [
       'Protecao craniana resistente para rotinas industriais e obras pesadas.',
     icon: 'engineering',
     image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAXLtnlvYJoQ60xhQ4mevpLqSpSM_1kYiNyNADXct7CnSntvoWlt8WbLUTWyQDl4aUxssosQrRG22dr-gWTBQzAC9OalqtsTutYVDUeY7Wo9Sb07cyzHScxTAksEtlsHPZy5g_W3aFbpcVlvk4hW1lsOLhPdml4X6xfBLLu3VeLSIMWYDwxL7Ywha5PcLkwnVH21HfyYiLjB5XiBqXJPV950a9YMeYcWNCI-vXr535ivA2TqvTfL_5KpZusLehuDAzETsiWV12uAfQ',
+      '/products/helmet.png',
   },
   {
     title: 'Luvas',
@@ -25,7 +26,7 @@ const categories = [
       'Modelos para protecao mecanica, abrasao, corte e manuseio seguro.',
     icon: 'front_hand',
     image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAoF5OkbGjHDOUSGwvu_XvFOZBYNPMcR9Ve6cEUqYyJkywSyOLDBF2BIa3B1dQPlBjDcHnIwy1tNIyvI7aYIpkX43eYggjoyIfcurqAuMdIYHzXeCS0hrf2B9Qk8gRnTvvPrI4mbcXv7MLlO79U6yl8iLXMN7_uMag1_fP36eYTy8gvVTkIcvImTf9btekxVItAvD2CG9f0ykEqNTsKN28zaghRgYkDKOpR3a7EOJIwsLYEfJlhpe86gEop9CrfZgiQDOMq8X_J4BA',
+      '/products/glove.png',
   },
   {
     title: 'Oculos de Protecao',
@@ -33,7 +34,7 @@ const categories = [
       'Barreira visual contra particulas, respingos e riscos em operacao.',
     icon: 'visibility',
     image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCYSclHtfQ1uz50YoJSP3NIq1gey-Bd9Q4Z6f6oHemZBLx9id_x73V5MXUa2Pf1mbOZSPgcN2cJgEAOeWjiNQTy0vFOeHTj6nol1jc_KjmMt9x_LutT0vn_m__1_P58t_Y-cvtejDMswDKw2EjaMy8zNDVYUa9EFgW7o6KDFzDrb5BL7FvA1FRAsd1GSaTTDBkgk7mkQhfa7wMbMV_nUNWP23hXnu41XxK8ivT8vjUglYfCgWzVK-lGO3BmZSaDk_hUXF-Pt9En1YI',
+      '/products/oculos.png',
   },
   {
     title: 'Acessorios',
@@ -41,7 +42,7 @@ const categories = [
       'Itens complementares para organizacao, sinalizacao e suporte no trabalho.',
     icon: 'construction',
     image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCYSclHtfQ1uz50YoJSP3NIq1gey-Bd9Q4Z6f6oHemZBLx9id_x73V5MXUa2Pf1mbOZSPgcN2cJgEAOeWjiNQTy0vFOeHTj6nol1jc_KjmMt9x_LutT0vn_m__1_P58t_Y-cvtejDMswDKw2EjaMy8zNDVYUa9EFgW7o6KDFzDrb5BL7FvA1FRAsd1GSaTTDBkgk7mkQhfa7wMbMV_nUNWP23hXnu41XxK8ivT8vjUglYfCgWzVK-lGO3BmZSaDk_hUXF-Pt9En1YI',
+      '/products/tool.png',
   },
   {
     title: 'Vestimentas',
@@ -49,13 +50,53 @@ const categories = [
       'Roupas tecnicas para visibilidade, resistencia e protecao diaria.',
     icon: 'checkroom',
     image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDgQ1e0eb0DyRto6j0j3UDly-IplLY3w1A31kEy0CN8l4M_8c1scvI11rn25ppfbHnyGH6IKYXpBQQCNcc3TsAyLOczqp6Bf7s4wcaaB1IxXI1-uPV5vUWOvLvv9ck7ARPIYhcwuu9nwjH9AHeE7_VuEPOqQc0SaKu8lGE6odfmEqyvYkDp12FW6NX_w0UkNrsvqZJJGhKExt7lzWbwY2n153WB8ChVZyMnDOQEZ-OUtmx1McXEx0qexMbJRHmmNDj7Ak7IKbO7u8o',
+      '/products/colete.png',
   },
 ];
 
 export default function ProductCategories() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    if (prefersReducedMotion) {
+      const frameId = window.requestAnimationFrame(() => setIsVisible(true));
+
+      return () => window.cancelAnimationFrame(frameId);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        setIsVisible(true);
+        observer.unobserve(entry.target);
+      },
+      {
+        rootMargin: '0px 0px -18% 0px',
+        threshold: 0.4,
+      },
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="industrial-grid bg-surface px-8 py-24">
+    <section ref={sectionRef} className="industrial-grid bg-surface px-8 py-24">
       <div className="container mx-auto h-px-200">
         <div className="mb-16 flex items-end justify-between">
           <div>
@@ -80,10 +121,15 @@ export default function ProductCategories() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {categories.map((category) => (
+          {categories.map((category, index) => (
             <div
-              className="group relative flex aspect-video overflow-hidden rounded-xl border border-primary/10 bg-primary/20 p-8 text-left transition-all hover:border-primary/30 hover:bg-primary/30"
+              className={`group relative flex aspect-video overflow-hidden rounded-xl border border-primary/10 bg-primary/20 p-8 text-left transition-all duration-[1200ms] ease-out hover:border-primary/30 hover:bg-primary/30 ${
+                isVisible
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-12 opacity-0'
+              }`}
               key={category.title}
+              style={{ transitionDelay: `${index * 160}ms` }}
             >
               <Image
                 alt={category.title}

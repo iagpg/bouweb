@@ -4,6 +4,8 @@ import { NextResponse } from 'next/server';
 type ContactPayload = {
   name?: string;
   email?: string;
+  cnpj?: string;
+  companyName?: string;
   message?: string;
 };
 
@@ -22,11 +24,13 @@ export async function POST(request: Request) {
     const body = (await request.json()) as ContactPayload;
     const name = body.name?.trim();
     const email = body.email?.trim();
+    const cnpj = body.cnpj?.trim();
+    const companyName = body.companyName?.trim();
     const message = body.message?.trim();
 
-    if (!name || !email || !message) {
+    if (!name || !email || !cnpj || !companyName || !message) {
       return NextResponse.json(
-        { message: 'Preencha nome, email e mensagem.' },
+        { message: 'Preencha nome, email, CNPJ, razão social e mensagem.' },
         { status: 400 },
       );
     }
@@ -46,11 +50,13 @@ export async function POST(request: Request) {
       to: process.env.CONTACT_TO_EMAIL || getEnvValue('SMTP_USER'),
       replyTo: email,
       subject: `Novo contato pelo site - ${name}`,
-      text: `Nome: ${name}\nEmail: ${email}\n\nMensagem:\n${message}`,
+      text: `Nome: ${name}\nEmail: ${email}\nCNPJ: ${cnpj}\nRazão Social: ${companyName}\n\nMensagem:\n${message}`,
       html: `
         <h2>Novo contato pelo site</h2>
         <p><strong>Nome:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
+        <p><strong>CNPJ:</strong> ${cnpj}</p>
+        <p><strong>Razão Social:</strong> ${companyName}</p>
         <p><strong>Mensagem:</strong></p>
         <p>${message.replace(/\n/g, '<br />')}</p>
       `,

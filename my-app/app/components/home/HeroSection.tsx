@@ -42,14 +42,16 @@ export default function HeroSection() {
             </AnimatedHighlight>
           </h1>
 
-          <p className="mb-10 max-w-xl font-body text-xl leading-relaxed text-on-surface-variant">
+          <p className="animate-fade-up mb-10 max-w-xl font-body text-xl leading-relaxed text-on-surface-variant"
+            style={{ ['--delay' as string]: '3s' }}>
             Equipamentos de alta performance para quem exige o maximo em seguranca e durabilidade para sua obra.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4">
             <ContactModalTrigger
-              className="group relative isolate overflow-hidden rounded-md bg-primary px-10 py-4 font-headline font-bold uppercase tracking-wider text-on-primary shadow-[0_10px_30px_-10px_rgba(254,174,43,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dim hover:shadow-[0_18px_45px_-18px_rgba(254,174,43,0.55)]"
+              className="animate-fade-up group relative isolate overflow-hidden rounded-md bg-primary px-10 py-4 font-headline font-bold uppercase tracking-wider text-on-primary shadow-[0_10px_30px_-10px_rgba(254,174,43,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dim hover:shadow-[0_18px_45px_-18px_rgba(254,174,43,0.55)]"
+              style={{ ['--delay' as string]: '3.5s' }}
             >
               <span className="relative z-10 flex items-center gap-3">
                 <span className="material-symbols-outlined transition-transform duration-300 group-hover:scale-110">
@@ -63,7 +65,8 @@ export default function HeroSection() {
               href={CATALOG_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative inline-flex items-center justify-center rounded-md border border-outline-variant px-10 py-4 font-headline font-bold uppercase tracking-wider text-white transition-all hover:bg-white/5"
+              className="animate-fade-up relative inline-flex items-center justify-center rounded-md border border-outline-variant px-10 py-4 font-headline font-bold uppercase tracking-wider text-white transition-all hover:bg-white/5"
+              style={{ ['--delay' as string]: '4s' }}
             >
               <span className="absolute -right-1 -top-1 flex size-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-75"></span>

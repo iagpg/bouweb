@@ -2,13 +2,14 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CATALOG_HREF } from '@/app/lib/whatsapp';
 import ShimmerButton from '../ui/ShimmerButton';
 
 export default function TopNavBar() {
   const pathname = usePathname();
+  const router = useRouter();
   const isContact = pathname === '/contact';
   const isAboutUs = pathname === '/about-us';
 
@@ -20,6 +21,20 @@ export default function TopNavBar() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    const pendingScrollTarget = window.sessionStorage.getItem('pendingScrollTarget');
+
+    if (pathname === '/' && pendingScrollTarget) {
+      window.sessionStorage.removeItem('pendingScrollTarget');
+      window.history.replaceState(null, '', `/#${pendingScrollTarget}`);
+
+      window.requestAnimationFrame(() => {
+        document.getElementById(pendingScrollTarget)?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+    }
+
     const handleHashChange = () => {
       setHash(window.location.hash);
     };
@@ -29,6 +44,30 @@ export default function TopNavBar() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [pathname]);
 
+  const scrollToBrands = () => {
+    const brandsSection = document.getElementById('brands');
+
+    if (!brandsSection) return;
+
+    window.history.pushState(null, '', '/#brands');
+    setHash('#brands');
+    brandsSection.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
+
+  const handleBrandsClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+
+    if (pathname === '/') {
+      scrollToBrands();
+      return;
+    }
+
+    window.sessionStorage.setItem('pendingScrollTarget', 'brands');
+    router.push('/');
+  };
 
   const navLinkClass = (isActive = false) =>
     [
@@ -64,7 +103,7 @@ export default function TopNavBar() {
           />
         </Link>
 
-        <div className="hidden items-center justify-center gap-8 font-['Space_Grotesk'] text-sm uppercase tracking-tight md:flex">
+        <div className="hidden items-center justify-center gap-8 font-headline text-sm uppercase tracking-tight md:flex">
           <Link href="/" className={navLinkClass(isHome)} onClick={() => setHash('/') }>
             Home
             {isHome && activeLine}
@@ -83,7 +122,11 @@ export default function TopNavBar() {
           </Link> */}
 
           <Link
-            href="/#brands" className={navLinkClass(isBrands)} >
+            href="/#brands"
+            className={navLinkClass(isBrands)}
+            onClick={handleBrandsClick}
+            scroll={false}
+          >
             Brands
              {isBrands && activeLine}
           </Link>

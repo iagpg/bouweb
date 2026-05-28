@@ -10,14 +10,28 @@ type FormStatus = {
 type FormValues = {
   name: string;
   email: string;
+  cnpj: string;
+  companyName: string;
   message: string;
 };
 
 const initialValues: FormValues = {
   name: '',
   email: '',
+  cnpj: '',
+  companyName: '',
   message: '',
 };
+
+function formatCnpj(value: string) {
+  const digits = value.replace(/\D/g, '').slice(0, 14);
+
+  return digits
+    .replace(/^(\d{2})(\d)/, '$1.$2')
+    .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/\.(\d{3})(\d)/, '.$1/$2')
+    .replace(/(\d{4})(\d)/, '$1-$2');
+}
 
 export default function ContactForm() {
   const [formValues, setFormValues] = useState<FormValues>(initialValues);
@@ -114,6 +128,45 @@ export default function ContactForm() {
                 setFormValues((current) => ({
                   ...current,
                   email: event.target.value,
+                }))
+              }
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-headline uppercase tracking-widest text-on-surface-variant">
+              CNPJ
+            </label>
+            <input
+              className="w-full rounded-md border-none bg-zinc-950 p-4 text-on-surface placeholder:text-neutral-700 focus:ring-1 focus:ring-primary"
+              placeholder="00.000.000/0000-00"
+              maxLength={18}
+              type="text"
+              inputMode="numeric"
+              value={formValues.cnpj}
+              onChange={(event) =>
+                setFormValues((current) => ({
+                  ...current,
+                  cnpj: formatCnpj(event.target.value),
+                }))
+              }
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-headline uppercase tracking-widest text-on-surface-variant">
+              Razão Social
+            </label>
+            <input
+              className="w-full rounded-md border-none bg-zinc-950 p-4 text-on-surface placeholder:text-neutral-700 focus:ring-1 focus:ring-primary"
+              placeholder="Digite a razão social"
+              maxLength={80}
+              type="text"
+              value={formValues.companyName}
+              onChange={(event) =>
+                setFormValues((current) => ({
+                  ...current,
+                  companyName: event.target.value,
                 }))
               }
               required
