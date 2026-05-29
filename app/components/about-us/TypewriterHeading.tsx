@@ -41,7 +41,7 @@ export default function TypewriterHeading() {
 
   return (
     <h1
-      className="mb-8 font-headline text-6xl font-bold leading-[0.9] tracking-tighter text-white md:text-8xl"
+      className="mb-5 font-headline text-5xl font-bold leading-[0.9] tracking-tighter text-white sm:mb-6 sm:text-6xl md:mb-8 md:text-8xl"
       aria-label={fullText}
     >
       <span aria-hidden="true">

@@ -59,55 +59,55 @@ export default function ContactModal({ onClose }: ContactModalProps) {
   return (
     <div
       aria-modal="true"
-      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 px-5 py-8 backdrop-blur-md"
+      className="fixed inset-0 z-[60] flex items-end justify-center bg-black/60 px-3 py-3 backdrop-blur-md sm:items-center sm:px-5 sm:py-8"
       role="dialog"
       onClick={onClose}
     >
       <div
-        className="relative w-full overflow-y-auto max-w-5xl rounded-xl border border-outline-variant/20 bg-surface/95 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.45)] md:p-8"
+        className="relative flex max-h-[calc(100dvh-24px)] w-full max-w-5xl flex-col rounded-xl border border-outline-variant/20 bg-surface/95 shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:max-h-[calc(100dvh-64px)]"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           aria-label="Fechar modal"
-          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant/30 text-neutral-300 transition-colors hover:border-primary/60 hover:text-primary focus:outline-none focus:ring-4 focus:ring-primary/20"
+          className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant/30 bg-surface/90 text-neutral-300 transition-colors hover:border-primary/60 hover:text-primary focus:outline-none focus:ring-4 focus:ring-primary/20 sm:right-4 sm:top-4"
           type="button"
           onClick={onClose}
         >
           <span className="material-symbols-outlined text-xl">close</span>
         </button>
 
-        <div className="mb-8 pr-12">
+        <div className="shrink-0 px-5 pb-5 pt-6 pr-14 sm:px-6 sm:pb-6 sm:pt-7 md:px-8">
           <p className="mb-2 font-label text-xs uppercase tracking-widest text-primary">
             Atendimento
           </p>
-          <h2 className="font-headline text-3xl font-bold uppercase tracking-tight text-white md:text-4xl">
+          <h2 className="font-headline text-2xl font-bold uppercase leading-tight tracking-tight text-white sm:text-3xl md:text-4xl">
             Com quem você gostaria de falar?
           </h2>
         </div>
         {/* modal */}
-        <div className="grid grid-cols-1 max-h-[90vh] overflow-y-auto gap-6 md:grid-cols-3 py-8">
+        <div className="grid flex-1 grid-cols-1 gap-4 overflow-y-auto px-5 pb-5 sm:gap-6 sm:px-6 sm:pb-6 md:grid-cols-3 md:px-8 md:pb-8">
           {contacts.map((contact) => (
             <div
-              className="group flex flex-col items-center py-8 rounded-xl border border-outline-variant/20 bg-surface-container p-6 text-center transition-all hover:border-primary/50"
+              className="group flex flex-col items-center rounded-xl border border-outline-variant/20 bg-surface-container p-5 text-center transition-all hover:border-primary/50 sm:p-6"
               key={contact.name}
             >
-              <div className="relative mb-4 h-24 w-24 overflow-hidden rounded-full border-2 border-primary/20">
+              <div className="relative mb-4 h-20 w-20 overflow-hidden rounded-full border-2 border-primary/20 sm:h-24 sm:w-24">
                 <Image
                   alt={contact.name}
                   className="object-cover"
                   fill
-                  sizes="96px"
+                  sizes="(min-width: 640px) 96px, 80px"
                   src={contact.image}
                 />
               </div>
-              <h3 className="font-headline text-lg font-bold text-white">
+              <h3 className="font-headline text-base font-bold text-white sm:text-lg">
                 {contact.name}
               </h3>
-              <p className="mb-6 font-label text-xs uppercase tracking-widest text-primary">
+              <p className="mb-5 font-label text-[11px] uppercase tracking-widest text-primary sm:mb-6 sm:text-xs">
                 {contact.role}
               </p>
               <a
-                className="flex w-full items-center justify-center gap-2 rounded-md bg-primary py-3 font-headline text-xs font-bold uppercase tracking-wider text-on-primary transition-all hover:bg-primary-dim"
+                className="flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-3 font-headline text-xs font-bold uppercase tracking-wider text-on-primary transition-all hover:bg-primary-dim"
                 href={contact.whatsapp}
                 rel="noreferrer"
                 target="_blank"

@@ -13,10 +13,20 @@ export default function ScrollNumberFlow({ value }: ScrollNumberFlowProps) {
   const [currentValue, setCurrentValue] = useState(0);
 
   useEffect(() => {
-    const section = numberRef.current?.closest('section');
+    const numberElement = numberRef.current;
 
-    if (!section) {
+    if (!numberElement) {
       return;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    if (prefersReducedMotion) {
+      const frameId = window.requestAnimationFrame(() => setCurrentValue(value));
+
+      return () => window.cancelAnimationFrame(frameId);
     }
 
     const observer = new IntersectionObserver(
@@ -27,19 +37,30 @@ export default function ScrollNumberFlow({ value }: ScrollNumberFlowProps) {
 
         hasAnimatedRef.current = true;
         setCurrentValue(value);
-        observer.disconnect();
+        observer.unobserve(entry.target);
       },
-      { threshold: 0.8 }
+      {
+        rootMargin: '0px 0px -18% 0px',
+        threshold: 0.25,
+      },
     );
 
-    observer.observe(section);
+    observer.observe(numberElement);
 
     return () => observer.disconnect();
   }, [value]);
 
   return (
     <span ref={numberRef}>
-      <NumberFlow 	spinTiming={{ direction:"alternate", duration: 1750, easing:"ease-in-out"  }} format={{ notation: 'compact' }}  value={currentValue} />
+      <NumberFlow
+        spinTiming={{
+          direction: 'alternate',
+          duration: 1750,
+          easing: 'ease-in-out',
+        }}
+        format={{ notation: 'compact' }}
+        value={currentValue}
+      />
     </span>
   );
 }

@@ -112,7 +112,7 @@ export default function TopNavBar() {
             src="/bouw_logo.svg"
             alt="Bouwobra"
             fill
-            className="scale-150 object-contain object-left md:scale-200"
+            className="scale-200 object-contain object-center md:scale-175 md:object-left"
             priority
           />
         </Link>

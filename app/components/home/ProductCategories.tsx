@@ -56,12 +56,13 @@ const categories = [
 
 export default function ProductCategories() {
   const sectionRef = useRef<HTMLElement>(null);
+  const cardsGridRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const section = sectionRef.current;
+    const cardsGrid = cardsGridRef.current;
 
-    if (!section) {
+    if (!cardsGrid) {
       return;
     }
 
@@ -70,6 +71,12 @@ export default function ProductCategories() {
     ).matches;
 
     if (prefersReducedMotion) {
+      const frameId = window.requestAnimationFrame(() => setIsVisible(true));
+
+      return () => window.cancelAnimationFrame(frameId);
+    }
+
+    if (!('IntersectionObserver' in window)) {
       const frameId = window.requestAnimationFrame(() => setIsVisible(true));
 
       return () => window.cancelAnimationFrame(frameId);
@@ -85,32 +92,32 @@ export default function ProductCategories() {
         observer.unobserve(entry.target);
       },
       {
-        rootMargin: '0px 0px -18% 0px',
-        threshold: 0.4,
+        rootMargin: '0px 0px -8% 0px',
+        threshold: 0.1,
       },
     );
 
-    observer.observe(section);
+    observer.observe(cardsGrid);
 
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={sectionRef} className="industrial-grid bg-surface px-8 py-24">
-      <div className="container mx-auto h-px-200">
-        <div className="mb-16 flex items-end justify-between">
+    <section ref={sectionRef} className="industrial-grid bg-surface px-5 py-20 sm:px-8 sm:py-24">
+      <div className="container mx-auto">
+        <div className="mb-10 flex flex-col gap-5 sm:mb-16 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="font-headline text-4xl font-bold tracking-tighter text-white">
+            <h2 className="font-headline text-3xl font-bold tracking-tighter text-white sm:text-4xl">
               Nossos Produtos
             </h2>
-            <p className="mt-2 text-on-surface-variant">
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-on-surface-variant sm:text-base">
               Tecnologia avancada em cada detalhe do seu EPI.
             </p>
           </div>
 
           <div className="mx-12 hidden h-px flex-1 bg-outline-variant/20 md:block"></div>
           <a
-            className="flex items-center gap-2 font-headline text-sm font-bold uppercase tracking-widest text-primary transition-all hover:gap-4"
+            className="flex w-fit items-center gap-2 font-headline text-sm font-bold uppercase tracking-widest text-primary transition-all hover:gap-4"
             href={CATALOG_HREF}
             target="_blank"
             rel="noopener noreferrer"
@@ -120,10 +127,13 @@ export default function ProductCategories() {
           </a>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          ref={cardsGridRef}
+          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+        >
           {categories.map((category, index) => (
             <div
-              className={`group relative flex aspect-video overflow-hidden rounded-xl border border-primary/10 bg-primary/20 p-8 text-left transition-all duration-[1200ms] ease-out hover:border-primary/30 hover:bg-primary/30 ${
+              className={`group relative flex min-h-64 overflow-hidden rounded-xl border border-primary/10 bg-primary/20 p-6 text-left transition-all duration-[1200ms] ease-out hover:border-primary/30 hover:bg-primary/30 sm:aspect-video sm:min-h-0 sm:p-8 ${
                 isVisible
                   ? 'translate-y-0 opacity-100'
                   : 'translate-y-12 opacity-0'
@@ -135,17 +145,17 @@ export default function ProductCategories() {
                 alt={category.title}
                 className="object-cover opacity-35 grayscale transition duration-500 group-hover:scale-105 group-hover:opacity-45"
                 fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, calc(100vw - 40px)"
                 src={category.image}
               />
               <div className="absolute inset-0 bg-primary/45 mix-blend-multiply" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
               <div className="relative z-10 mt-auto max-w-sm">
-                <span className="material-symbols-outlined mb-4 block text-5xl text-primary">
+                <span className="material-symbols-outlined mb-4 block text-4xl text-primary sm:text-5xl">
                   {category.icon}
                 </span>
-                <h3 className="font-headline text-xl font-bold text-white">
+                <h3 className="font-headline text-lg font-bold text-white sm:text-xl">
                   {category.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/75">

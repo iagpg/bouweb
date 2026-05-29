@@ -31,15 +31,19 @@ function PerformanceItem({
   title: string;
 }) {
   return (
-    <div className="flex items-start gap-6">
-      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-surface-container-highest text-primary">
-        <span className="material-symbols-outlined">{icon}</span>
+    <div className="flex items-start gap-4 sm:gap-6">
+      <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-surface-container-highest text-primary sm:h-12 sm:w-12">
+        <span className="material-symbols-outlined text-[24px] sm:text-[28px]">
+          {icon}
+        </span>
       </div>
       <div>
-        <h5 className="mb-1 font-headline text-xl font-bold uppercase text-white">
+        <h5 className="mb-1 font-headline text-lg font-bold uppercase leading-tight text-white sm:text-xl">
           {title}
         </h5>
-        <p className="text-sm text-on-surface-variant">{description}</p>
+        <p className="text-sm leading-relaxed text-on-surface-variant">
+          {description}
+        </p>
       </div>
     </div>
   );
@@ -47,47 +51,52 @@ function PerformanceItem({
 
 export default function AboutPerformanceSection() {
   return (
-    <section className="flex flex-col items-center gap-20 px-8 py-32 md:flex-row md:px-24">
-      <div className="flex-1 space-y-12">
-        <h2 className="font-headline text-5xl font-extrabold uppercase leading-none tracking-tighter text-white">
-          Projetado para <br />
-          <span className="text-primary">Performance</span>
-        </h2>
+    <section className="px-5 py-20 sm:px-8 sm:py-24 md:px-24 md:py-32">
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-stretch gap-14 md:flex-row md:items-center md:gap-20">
+        <div className="w-full flex-1 space-y-8 sm:space-y-12">
+          <h2 className="font-headline text-4xl font-extrabold uppercase leading-none tracking-tighter text-white sm:text-5xl lg:text-6xl">
+            Projetado para <br />
+            <span className="text-primary">Performance</span>
+          </h2>
 
-        <div className="space-y-8">
-          {performanceItems.map((item) => (
-            <PerformanceItem key={item.title} {...item} />
-          ))}
-        </div>
-      </div>
-
-      <div className="relative flex-1">
-        <div className="relative aspect-square overflow-hidden rounded-xl bg-surface-container-low p-4">
-          <div className="pointer-events-none absolute inset-0 m-4 border-[20px] border-primary/5" />
-          <Image
-            alt="Homem com braços cruzados parado"
-            className="rounded-lg object-cover shadow-2xl"
-            src="/about-us.png"
-            fill
-            sizes="(min-width: 768px) 50vw, 180vw"
-          />
+          <div className="space-y-6 sm:space-y-8">
+            {performanceItems.map((item) => (
+              <PerformanceItem key={item.title} {...item} />
+            ))}
+          </div>
         </div>
 
-        <div className="absolute -right-12 top-6 z-10 max-w-[240px] border border-primary/30 bg-black/75 p-5 shadow-2xl backdrop-blur-md">
-          <p className="mb-1 font-headline text-xl font-bold leading-tight text-white">
-            Carlos Forgnone
-          </p>
-          <p className="font-label text-xs font-bold uppercase tracking-widest text-primary">
-            Sócio-Diretor Operacional
-          </p>
-        </div>
+        <div className="relative w-full flex-1 self-center md:self-auto">
+          <div className="relative mx-auto w-full max-w-sm sm:max-w-md md:max-w-none">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-surface-container-low p-3 sm:aspect-square sm:p-4">
+              <div className="pointer-events-none absolute inset-3 border-[12px] border-primary/5 sm:inset-4 sm:border-[20px]" />
+              <Image
+                alt="Homem com braços cruzados parado"
+                className="rounded-lg object-cover shadow-2xl"
+                loading="eager"
+                src="/about-us.png"
+                fill
+                sizes="(min-width: 768px) 50vw, (min-width: 640px) 448px, calc(100vw - 40px)"
+              />
+            </div>
 
-        <div className="absolute -bottom-10 -left-10 hidden max-w-xs border border-primary/20 bg-surface-container-highest p-8 shadow-2xl backdrop-blur-md md:block">
-          <p className="mb-2 font-headline text-lg font-bold italic text-white">
-            &quot;Nosso compromisso é garantir que cada obra, empresa e
-            profissional tenha acesso aos EPIs e ferramentas certas para
-            trabalhar com mais segurança, eficiência e confiança.&quot;
-          </p>
+            <div className="absolute inset-x-3 bottom-3 z-10 border border-primary/30 bg-black/75 p-4 shadow-2xl backdrop-blur-md sm:inset-x-auto sm:right-4 sm:top-6 sm:bottom-auto sm:max-w-[240px] sm:p-5 md:-right-8 lg:-right-12">
+              <p className="mb-1 font-headline text-lg font-bold leading-tight text-white sm:text-xl">
+                Carlos Forgnone
+              </p>
+              <p className="font-label text-[11px] font-bold uppercase tracking-widest text-primary sm:text-xs">
+                Sócio-Diretor Operacional
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 border border-primary/20 bg-surface-container-highest p-5 shadow-2xl backdrop-blur-md sm:p-6 md:absolute md:-bottom-10 md:-left-10 md:mt-0 md:max-w-xs md:p-8">
+            <p className="font-headline text-base font-bold italic leading-snug text-white sm:text-lg">
+              &quot;Nosso compromisso é garantir que cada obra, empresa e
+              profissional tenha acesso aos EPIs e ferramentas certas para
+              trabalhar com mais segurança, eficiência e confiança.&quot;
+            </p>
+          </div>
         </div>
       </div>
     </section>
