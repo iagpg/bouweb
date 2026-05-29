@@ -17,21 +17,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar código
+      - name: Download Code
         uses: actions/checkout@v4
 
-      - name: Configurar Node
+      - name: Configure Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Instalar dependências
-        run: npm ci
+      - name: Install depedencies
+        run: npm install
 
-      - name: Gerar build estático
+      - name: generate static build
         run: npm run build
 
-      - name: Publicar na branch deploy
+      - name: publich on deploy branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
