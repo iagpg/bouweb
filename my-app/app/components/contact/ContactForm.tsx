@@ -11,7 +11,7 @@ type FormValues = {
   name: string;
   email: string;
   cnpj: string;
-  companyName: string;
+  phone: string;
   message: string;
 };
 
@@ -19,7 +19,7 @@ const initialValues: FormValues = {
   name: '',
   email: '',
   cnpj: '',
-  companyName: '',
+  phone: '',
   message: '',
 };
 
@@ -31,6 +31,20 @@ function formatCnpj(value: string) {
     .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
     .replace(/\.(\d{3})(\d)/, '.$1/$2')
     .replace(/(\d{4})(\d)/, '$1-$2');
+}
+
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, '').slice(0, 11);
+
+  if (digits.length <= 10) {
+    return digits
+      .replace(/^(\d{2})(\d)/, '($1) $2')
+      .replace(/(\d{4})(\d)/, '$1-$2');
+  }
+
+  return digits
+    .replace(/^(\d{2})(\d)/, '($1) $2')
+    .replace(/(\d{5})(\d)/, '$1-$2');
 }
 
 export default function ContactForm() {
@@ -56,12 +70,16 @@ export default function ContactForm() {
     setStatus(null);
 
     try {
-      const response = await fetch('/api/contact', {
+      const formData = new FormData();
+      formData.append('name', formValues.name);
+      formData.append('email', formValues.email);
+      formData.append('cnpj', formValues.cnpj);
+      formData.append('phone', formValues.phone);
+      formData.append('message', formValues.message);
+
+      const response = await fetch('/enviar-email.php', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formValues),
+        body: formData,
       });
 
       const data = (await response.json()) as { message?: string };
@@ -155,18 +173,19 @@ export default function ContactForm() {
           </div>
           <div className="space-y-2">
             <label className="text-xs font-headline uppercase tracking-widest text-on-surface-variant">
-              Razão Social
+              Telefone
             </label>
             <input
               className="w-full rounded-md border-none bg-zinc-950 p-4 text-on-surface placeholder:text-neutral-700 focus:ring-1 focus:ring-primary"
-              placeholder="Digite a razão social"
-              maxLength={80}
-              type="text"
-              value={formValues.companyName}
+              placeholder="(13) 99999-9999"
+              maxLength={15}
+              type="tel"
+              inputMode="tel"
+              value={formValues.phone}
               onChange={(event) =>
                 setFormValues((current) => ({
                   ...current,
-                  companyName: event.target.value,
+                  phone: formatPhone(event.target.value),
                 }))
               }
               required

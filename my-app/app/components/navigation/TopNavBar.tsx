@@ -14,7 +14,8 @@ export default function TopNavBar() {
   const isAboutUs = pathname === '/about-us';
 
   const [hash, setHash] = useState('');
-  
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const isBrands = pathname === '/' && hash === '#brands';
   const isHome = pathname === '/' && !isBrands;
 
@@ -59,6 +60,7 @@ export default function TopNavBar() {
 
   const handleBrandsClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
+    setIsMenuOpen(false);
 
     if (pathname === '/') {
       scrollToBrands();
@@ -77,12 +79,20 @@ export default function TopNavBar() {
         : 'text-neutral-400 hover:text-white',
     ].join(' ');
 
+  const mobileNavLinkClass = (isActive = false) =>
+    [
+      'flex min-h-12 items-center border-b border-white/10 px-6 font-headline text-sm uppercase tracking-tight transition-colors',
+      isActive
+        ? 'bg-orange-500/10 text-orange-300'
+        : 'text-neutral-200 hover:bg-white/5 hover:text-white',
+    ].join(' ');
+
   const activeLine = (
     <span className="absolute bottom-0 left-0 h-0.5 w-full origin-left animate-[nav-active-line_500ms_ease-out_both] bg-orange-500" />
   );
 
   return (
-    <nav className="fixed top-0 z-50 w-full bg-neutral-900/80 shadow-[0px_40px_40px_-15px_rgba(254,174,43,0.04)] backdrop-blur-md">
+    <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-neutral-900/90 shadow-[0px_40px_40px_-15px_rgba(254,174,43,0.04)] backdrop-blur-md md:border-b-0 md:bg-neutral-900/80">
       <style>
         {`
           @keyframes nav-active-line {
@@ -92,19 +102,23 @@ export default function TopNavBar() {
         `}
       </style>
 
-      <div className="container mx-auto grid h-20 grid-cols-[140px_1fr_140px] items-center px-8 md:grid-cols-[160px_1fr_160px]">
-        <Link href="/" className="relative mt-3 block h-15 w-25object-top">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 md:grid md:h-20 md:grid-cols-[160px_1fr_160px] md:px-8">
+        <Link
+          href="/"
+          className="relative block h-12 w-28 shrink-0 md:mt-3 md:h-15"
+          onClick={() => setHash('/')}
+        >
           <Image
             src="/bouw_logo.svg"
             alt="Bouwobra"
             fill
-            className="scale-200 object-contain object-left"
+            className="scale-150 object-contain object-left md:scale-200"
             priority
           />
         </Link>
 
         <div className="hidden items-center justify-center gap-8 font-headline text-sm uppercase tracking-tight md:flex">
-          <Link href="/" className={navLinkClass(isHome)} onClick={() => setHash('/') }>
+          <Link href="/" className={navLinkClass(isHome)} onClick={() => setHash('/')}>
             Home
             {isHome && activeLine}
           </Link>
@@ -114,13 +128,6 @@ export default function TopNavBar() {
             {isAboutUs && activeLine}
           </Link>
 
-          {/* <Link
-            href="#"
-            className="text-neutral-400 transition-colors hover:text-white"
-          >
-            Visita técnica
-          </Link> */}
-
           <Link
             href="/#brands"
             className={navLinkClass(isBrands)}
@@ -128,7 +135,7 @@ export default function TopNavBar() {
             scroll={false}
           >
             Brands
-             {isBrands && activeLine}
+            {isBrands && activeLine}
           </Link>
 
           <Link href="/contact" className={navLinkClass(isContact)}>
@@ -140,8 +147,72 @@ export default function TopNavBar() {
         <div className="hidden justify-end md:flex">
           <a href={CATALOG_HREF} target="_blank" rel="noopener noreferrer">
             <ShimmerButton className="h-10 px-7 py-3 text-sm">
-              Catalogo
+              Catálogo
             </ShimmerButton>
+          </a>
+        </div>
+
+        <button
+          type="button"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-white/10 text-neutral-100 transition-colors hover:border-orange-400/60 hover:text-orange-300 md:hidden"
+          aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setIsMenuOpen((current) => !current)}
+        >
+          <span className="material-symbols-outlined text-3xl">
+            {isMenuOpen ? 'close' : 'menu'}
+          </span>
+        </button>
+      </div>
+
+      <div
+        id="mobile-navigation"
+        className={`overflow-hidden border-t border-white/10 bg-neutral-950/95 transition-[max-height,opacity] duration-300 md:hidden ${
+          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="pb-4">
+          <Link
+            href="/"
+            className={mobileNavLinkClass(isHome)}
+            onClick={() => {
+              setHash('/');
+              setIsMenuOpen(false);
+            }}
+          >
+            Home
+          </Link>
+          <Link
+            href="/about-us"
+            className={mobileNavLinkClass(isAboutUs)}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Sobre Nós
+          </Link>
+          <Link
+            href="/#brands"
+            className={mobileNavLinkClass(isBrands)}
+            onClick={handleBrandsClick}
+            scroll={false}
+          >
+            Brands
+          </Link>
+          <Link
+            href="/contact"
+            className={mobileNavLinkClass(isContact)}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Contato
+          </Link>
+          <a
+            href={CATALOG_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mx-6 mt-4 flex min-h-12 items-center justify-center rounded-md bg-primary px-6 font-headline text-sm font-bold uppercase tracking-tight text-on-primary transition-colors hover:bg-primary-dim"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Catálogo
           </a>
         </div>
       </div>
