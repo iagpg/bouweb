@@ -8,26 +8,30 @@ on:
 permissions:
   contents: write
 
+env:
+FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: deploy code
+      - name: Baixar código
         uses: actions/checkout@v4
 
-      - name: Configure Node
+      - name: Configurar Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: install depedencies
+      - name: Instalar dependências
         run: npm ci
 
-      - name: generate static build
+      - name: Gerar build estático
         run: npm run build
 
-      - name: publish in deploy branch
+      - name: Publicar na branch deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
