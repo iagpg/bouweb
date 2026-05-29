@@ -76,7 +76,7 @@ export default function ProductCategories() {
       return () => window.cancelAnimationFrame(frameId);
     }
 
-    if (!('IntersectionObserver' in window)) {
+    if (typeof IntersectionObserver === 'undefined') {
       const frameId = window.requestAnimationFrame(() => setIsVisible(true));
 
       return () => window.cancelAnimationFrame(frameId);
