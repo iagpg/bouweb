@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import ContactForm from '../components/contact/ContactForm';
 import ContactInfoCards from '../components/contact/ContactInfoCards';
-import ContactMap from '../components/contact/ContactMap';
 import ContactWhatsAppCta from '../components/contact/ContactWhatsAppCta';
 
 export default function ContactPage() {
