@@ -9,7 +9,7 @@ export default function ContactWhatsAppCta() {
             Consulta via Whatsapp <br />
           </h3>
           <p className="mt-2 max-w-sm text-on-secondary-container/70">
-            Entre em contato diretamente com nosso departamento de engenharia para obter especificacoes tecnicas e precos rapidamente.
+            Entre em contato diretamente com nosso departamento de engenharia para obter especificações técnicas e preços rapidamente.
           </p>
         </div>
         <ContactModalTrigger

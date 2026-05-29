@@ -27,18 +27,18 @@ const contacts = [
     name: 'Patrícia Gomes',
     role: 'Vendas Externas',
     image:
-      '/contacts/patricia_gomes.png',
+      '/contacts/patricia_gomes.jpeg',
 
     whatsapp: "https://wa.me/+5513997022669?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es",
-  },
-
-  {
-    name: 'Patricia Luna',
-    role:'Financeiro',
-    image:
-      '/contacts/patricia_luna.png',
-    whatsapp: "https://wa.me/+5513991265194?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es",
   }
+
+  // {
+  //   name: 'Patricia Luna',
+  //   role:'Compras',
+  //   image:
+  //     '/contacts/patricia_luna.png',
+  //   whatsapp: "https://wa.me/+5513991265194?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es",
+  // }
 ];
 
 export default function ContactModal({ onClose }: ContactModalProps) {
@@ -64,7 +64,7 @@ export default function ContactModal({ onClose }: ContactModalProps) {
       onClick={onClose}
     >
       <div
-        className="relative w-full overflow-y-auto max-w-7xl rounded-xl border border-outline-variant/20 bg-surface/95 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.45)] md:p-8"
+        className="relative w-full overflow-y-auto max-w-5xl rounded-xl border border-outline-variant/20 bg-surface/95 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.45)] md:p-8"
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -85,7 +85,7 @@ export default function ContactModal({ onClose }: ContactModalProps) {
           </h2>
         </div>
         {/* modal */}
-        <div className="grid grid-cols-1 max-h-[90vh] overflow-y-auto gap-6 md:grid-cols-4 py-8">
+        <div className="grid grid-cols-1 max-h-[90vh] overflow-y-auto gap-6 md:grid-cols-3 py-8">
           {contacts.map((contact) => (
             <div
               className="group flex flex-col items-center py-8 rounded-xl border border-outline-variant/20 bg-surface-container p-6 text-center transition-all hover:border-primary/50"

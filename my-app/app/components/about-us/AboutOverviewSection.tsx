@@ -7,7 +7,7 @@ const metrics = [
     label: 'Anos de Experiência',
   },
   {
-    value: 239,
+    value: 439,
     label: 'Empresas atendidas',
   },
   {
