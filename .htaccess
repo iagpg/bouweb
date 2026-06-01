@@ -1,0 +1,2 @@
+ErrorDocument 404 /404.html
+SetEnv RECAPTCHA_SECRET "6LcXXwctAAAAAMBhvBenTct8wXKyRfgpOD-QW_bZ"
