@@ -62,6 +62,11 @@
     overflow-x: hidden;
   }
 
+  .grecaptcha-badge {
+    left: 14px !important;
+    right: auto !important;
+  }
+
   ::selection {
     background-color: var(--color-primary);
     color: var(--color-on-primary);
