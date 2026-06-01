@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import TopNavBar from "./components/navigation/TopNavBar";
 import Footer from "./components/layout/Footer";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
 import ContactModalProvider from "./components/ui/ContactModalProvider";
 import AssetPreloader from "./components/ui/AssetPreloader";
+
+const googleAnalyticsId = "G-CBF6VTCB2N";
 
 export const metadata: Metadata = {
   title: "Bouwobra | Proteção que Constrói Confiança",
@@ -36,6 +39,19 @@ export default function RootLayout({
         <link rel="preload" href="/new.mp4" as="video" type="video/mp4" />
       </head>
       <body className="min-h-full flex flex-col bg-surface text-on-surface">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '${googleAnalyticsId}');
+          `}
+        </Script>
         <AssetPreloader />
         <ContactModalProvider>
           <TopNavBar />

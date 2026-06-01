@@ -8,7 +8,7 @@ export default function HeroSection() {
       {/* Background Video with Gradient */}
       <div className="absolute inset-0 z-0">
         <video
-          className="h-full w-full object-cover object-center opacity-40 grayscale"
+          className="h-full w-full object-cover object-center opacity-80 grayscale"
           autoPlay
           loop
           muted
