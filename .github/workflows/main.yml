@@ -15,6 +15,7 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: Download Code
@@ -31,6 +32,13 @@ jobs:
 
       - name: Generate static build
         run: npm run build
+
+      - name: Create Apache config
+        run: |
+          {
+            echo 'ErrorDocument 404 /404.html'
+            echo 'SetEnv RECAPTCHA_SECRET "${{ secrets.RECAPTCHA_SECRET }}"'
+          } > out/.htaccess
 
       - name: Publish on deploy branch
         uses: peaceiris/actions-gh-pages@v4

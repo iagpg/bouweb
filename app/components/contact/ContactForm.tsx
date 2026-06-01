@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import Script from 'next/script';
+import { useEffect, useRef, useState } from 'react';
 
 type FormStatus = {
   kind: 'success' | 'error';
@@ -22,6 +23,21 @@ const initialValues: FormValues = {
   phone: '',
   message: '',
 };
+
+const recaptchaSiteKey = '6LcXXwctAAAAAC0dSrBG6qc1G9MzmE4InQgRLdjU';
+const recaptchaAction = 'contact_submit';
+
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (callback: () => void) => void;
+      execute: (
+        siteKey: string,
+        options: { action: string }
+      ) => Promise<string>;
+    };
+  }
+}
 
 function formatCnpj(value: string) {
   const digits = value.replace(/\D/g, '').slice(0, 14);
@@ -51,6 +67,8 @@ export default function ContactForm() {
   const [formValues, setFormValues] = useState<FormValues>(initialValues);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<FormStatus>(null);
+  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!status) {
@@ -70,12 +88,31 @@ export default function ContactForm() {
     setStatus(null);
 
     try {
+      if (!window.grecaptcha) {
+        throw new Error(
+          'Nao foi possivel validar o reCAPTCHA. Recarregue a pagina e tente novamente.'
+        );
+      }
+
+      const recaptchaToken = await new Promise<string>((resolve, reject) => {
+        window.grecaptcha?.ready(() => {
+          window.grecaptcha
+            ?.execute(recaptchaSiteKey, { action: recaptchaAction })
+            .then(resolve)
+            .catch(reject);
+        });
+      });
+
       const formData = new FormData();
       formData.append('name', formValues.name);
       formData.append('email', formValues.email);
       formData.append('cnpj', formValues.cnpj);
       formData.append('phone', formValues.phone);
       formData.append('message', formValues.message);
+      formData.append('website', honeypotRef.current?.value ?? '');
+      formData.append('startedAt', String(formStartedAt));
+      formData.append('recaptchaToken', recaptchaToken);
+      formData.append('recaptchaAction', recaptchaAction);
 
       const response = await fetch('/enviar-email.php', {
         method: 'POST',
@@ -89,6 +126,7 @@ export default function ContactForm() {
       }
 
       setFormValues(initialValues);
+      setFormStartedAt(Date.now());
       setStatus({
         kind: 'success',
         message: 'Mensagem enviada com sucesso.',
@@ -107,12 +145,28 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="border-l-4 border-primary bg-zinc-900/50 p-8 md:p-12">
-      <h2 className="mb-8 text-3xl font-headline font-bold uppercase">
-        Fale conosco!
-      </h2>
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <>
+      <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
+        strategy="afterInteractive"
+      />
+      <div className="border-l-4 border-primary bg-zinc-900/50 p-8 md:p-12">
+        <h2 className="mb-8 text-3xl font-headline font-bold uppercase">
+          Fale conosco!
+        </h2>
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div className="hidden" aria-hidden="true">
+            <label htmlFor="contact-website">Website</label>
+            <input
+              id="contact-website"
+              name="website"
+              type="text"
+              ref={honeypotRef}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <label className="text-xs font-headline uppercase tracking-widest text-on-surface-variant">
               Nome
@@ -228,7 +282,8 @@ export default function ContactForm() {
         >
           {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
         </button>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 }
